@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['192.168.99.100']
 # Application definition
 
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hhtest',
+        'NAME': 'django_test',
         'USER': 'root',
         'PASSWORD': '123456',
         'HOST': '10.34.75.34',
