@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from .models import Article, Reporter
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def index(request):
@@ -23,14 +24,14 @@ def edit_reporter(request):
     get = request.GET
     if ('id' not in get) or ('name' not in get):
         return HttpResponse("Invalid param")
-    reporters = Reporter.objects.filter(id=get['id'])
-    if len(reporters) == 0:
-        return HttpResponse("empty set")
+    try:
+        reporter = Reporter.objects.get(id=get['id'])
+    except ObjectDoesNotExist:
+        return HttpResponse("Reporter does not exist")
     full_name = get['name']
     exist = Reporter.objects.filter(full_name=full_name).exclude(id=get['id'])
     if len(exist):
         return HttpResponse("exist name")
-    reporter = reporters[0]
     reporter.full_name = full_name
     reporter.save()
     return HttpResponse('OK')
